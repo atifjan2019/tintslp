@@ -354,6 +354,16 @@
 			transform: scaleX(1) !important;
 		}
 
+		/* Fallback for static copies: prevent animated blocks staying hidden */
+		.tve_ea_thrive_animation {
+			opacity: 1 !important;
+		}
+
+		.tve_ea_thrive_animation.tve_anim_slide_top,
+		.tve_ea_thrive_animation.tve_anim_slide_left {
+			transform: none !important;
+		}
+
 		.tcb-flex-row {
 			display: flex;
 			flex-flow: row;
