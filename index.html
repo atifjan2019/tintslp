@@ -753,10 +753,18 @@
 	</style>
 
 
-	<link rel='stylesheet' id='js-socialproof-style-css'
-		href='wp-content/plugins/js-socialproof/assets/css/styled4d0.css?ver=6.9' media='all' />
-	<link rel='stylesheet' id='bitform-style-2-formid-css'
-		href='wp-content/uploads/bitforms/form-styles/bitform-2-formidd4d0.css?ver=6.9' media='all' />
+	<link rel="preload" as="style" id='js-socialproof-style-css'
+		href='wp-content/plugins/js-socialproof/assets/css/styled4d0.css?ver=6.9'
+		onload="this.onload=null;this.rel='stylesheet'" />
+	<noscript>
+		<link rel='stylesheet' href='wp-content/plugins/js-socialproof/assets/css/styled4d0.css?ver=6.9' media='all' />
+	</noscript>
+	<link rel="preload" as="style" id='bitform-style-2-formid-css'
+		href='wp-content/uploads/bitforms/form-styles/bitform-2-formidd4d0.css?ver=6.9'
+		onload="this.onload=null;this.rel='stylesheet'" />
+	<noscript>
+		<link rel='stylesheet' href='wp-content/uploads/bitforms/form-styles/bitform-2-formidd4d0.css?ver=6.9' media='all' />
+	</noscript>
 	<script src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js" defer></script>
 	<script src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
 	<script src="wp-includes/js/jquery/ui/core.minb37e.js?ver=1.13.3" id="jquery-ui-core-js" defer></script>

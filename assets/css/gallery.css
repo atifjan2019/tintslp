@@ -99,6 +99,10 @@
 /* ==========================================
    REVIEWS VISIBILITY
    ========================================== */
+.desktop-reviews-section {
+    display: block !important;
+}
+
 .mobile-reviews-section {
     display: none;
     /* Hidden by default (Desktop) */
