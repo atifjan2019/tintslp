@@ -1,8 +1,9 @@
 /**
- * Simple Gallery Lightbox & Slider Indicators
+ * Optimized Gallery Lightbox & Slider Indicators
  */
 document.addEventListener('DOMContentLoaded', function () {
     const galleryItems = document.querySelectorAll('.gallery-item');
+    if (!galleryItems.length && !document.querySelector('.gallery-grid')) return;
 
     // 1. Create lightbox elements
     const lightbox = document.createElement('div');
@@ -11,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     lightbox.innerHTML = `
         <div class="lightbox-content">
             <span class="lightbox-close">&times;</span>
-            <img src="" alt="Full size image">
+            <img src="" alt="Full size image" loading="lazy">
             <div class="lightbox-caption"></div>
         </div>
     `;
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const lightboxCaption = lightbox.querySelector('.lightbox-caption');
     const closeBtn = lightbox.querySelector('.lightbox-close');
 
-    // Add lightbox styles dynamically
+    // Add lightbox styles dynamically (moved to more efficient placement)
     const style = document.createElement('style');
     style.textContent = `
         .lightbox-overlay {
@@ -73,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             overflow: hidden;
         }
         
-        /* Slider Indicator Styles */
         .slider-indicator {
             display: flex;
             justify-content: center;
@@ -110,31 +110,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    const closeLightbox = () => {
+        lightbox.style.display = 'none';
+        document.body.classList.remove('lightbox-open');
+        lightboxImg.src = '';
+    };
+
     lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox || e.target === closeBtn) {
-            lightbox.style.display = 'none';
-            document.body.classList.remove('lightbox-open');
-            lightboxImg.src = '';
+            closeLightbox();
         }
     });
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && lightbox.style.display === 'flex') {
-            lightbox.style.display = 'none';
-            document.body.classList.remove('lightbox-open');
-            lightboxImg.src = '';
+            closeLightbox();
         }
     });
 
-    // 3. Slider Indicators Logic
+    // 3. Optimized Slider Indicators Logic using IntersectionObserver
     function setupSliderIndicators(sliderSelector, containerSelector, itemsPerSlide = 1) {
         const slider = document.querySelector(sliderSelector);
         const container = document.querySelector(containerSelector);
         if (!slider || !container) return;
 
-        const items = slider.children;
-        const slideCount = Math.ceil(items.length / itemsPerSlide);
+        const items = Array.from(slider.children);
+        if (items.length === 0) return;
 
+        const slideCount = Math.ceil(items.length / itemsPerSlide);
         const indicatorContainer = document.createElement('div');
         indicatorContainer.className = 'slider-indicator';
 
@@ -147,22 +150,35 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(indicatorContainer);
         const dots = indicatorContainer.querySelectorAll('.indicator-dot');
 
-        slider.addEventListener('scroll', () => {
-            const scrollPercent = slider.scrollLeft / (slider.scrollWidth - slider.clientWidth);
-            const activeIndex = Math.min(
-                Math.round(scrollPercent * (slideCount - 1)),
-                slideCount - 1
-            );
+        // Use IntersectionObserver for high performance active state detection
+        const observerOptions = {
+            root: slider,
+            threshold: 0.6
+        };
 
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === activeIndex);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = items.indexOf(entry.target);
+                    const activeSlideIndex = Math.floor(index / itemsPerSlide);
+                    
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === activeSlideIndex);
+                    });
+                }
             });
-        }, { passive: true });
+        }, observerOptions);
+
+        items.forEach(item => observer.observe(item));
     }
 
-    // Initialize for Gallery (2 items per slide)
-    if (window.innerWidth <= 768) {
+    // Initialize only if mobile
+    if (window.matchMedia("(max-width: 768px)").matches) {
         setupSliderIndicators('.gallery-grid', '.custom-gallery', 2);
         setupSliderIndicators('.mobile-review-slider', '.mobile-reviews-section', 1);
+        
+        // Also handle the testimonial slider in index.html if it exists
+        setupSliderIndicators('[data-css="tve-u-16c38bf81d6"]', '.desktop-reviews-section', 1);
     }
 });
+
