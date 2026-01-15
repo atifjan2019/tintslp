@@ -766,12 +766,6 @@
 	<noscript>
 		<link rel='stylesheet' href='wp-content/plugins/js-socialproof/assets/css/styled4d0.css?ver=6.9' media='all' />
 	</noscript>
-	<link rel="preload" as="style" id='bitform-style-2-formid-css'
-		href='wp-content/uploads/bitforms/form-styles/bitform-2-formidd4d0.css?ver=6.9'
-		onload="this.onload=null;this.rel='stylesheet'" />
-	<noscript>
-		<link rel='stylesheet' href='wp-content/uploads/bitforms/form-styles/bitform-2-formidd4d0.css?ver=6.9' media='all' />
-	</noscript>
 	<script src="wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js" defer></script>
 	<script src="wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
 	<script src="wp-includes/js/jquery/ui/core.minb37e.js?ver=1.13.3" id="jquery-ui-core-js" defer></script>
@@ -780,7 +774,9 @@
 	<script src="wp-includes/js/dist/hooks.minaf5f.js?ver=dd5603f07f9220ed27f1" id="wp-hooks-js" defer></script>
 	<script src="wp-includes/js/dist/i18n.min1cde.js?ver=c26c3dc7bed366793375" id="wp-i18n-js" defer></script>
 	<script id="wp-i18n-js-after">
-		wp.i18n.setLocaleData({ 'text direction\u0004ltr': ['ltr'] });
+		if (window.wp && wp.i18n && typeof wp.i18n.setLocaleData === 'function') {
+			wp.i18n.setLocaleData({ 'text direction\u0004ltr': ['ltr'] });
+		}
 		//# sourceURL=wp-i18n-js-after
 	</script>
 	<script src="wp-includes/js/dist/a11y.min1b1c.js?ver=cb460b4676c94bd228ed" id="wp-a11y-js" defer></script>
@@ -5003,7 +4999,7 @@
 		window.smartlook || (function (d) {
 			var o = smartlook = function () { o.api.push(arguments) }, h = d.getElementsByTagName('head')[0];
 			var c = d.createElement('script'); o.api = new Array(); c.async = true; c.type = 'text/javascript';
-			c.charset = 'utf-8'; c.src = '../web-sdk.smartlook.com/recorder.js'; h.appendChild(c);
+			c.charset = 'utf-8'; c.src = 'https://web-sdk.smartlook.com/recorder.js'; h.appendChild(c);
 		})(document);
 		smartlook('init', 'dbb0e4d1907819080e05a372ff749a5d6cb61bf3', { region: 'eu' });
 	</script>
@@ -5474,11 +5470,11 @@
 										<div class="thrv_wrapper tve_image_caption" data-css="tve-u-1867d87646f"
 											style=""><span class="tve_image_frame"><img decoding="async"
 													class="tve_image wp-image-19" alt="Locksmith Near Me" data-id="19"
-													width="440" data-init-width="440" height="550"
-													data-init-height="550" title=""
+													width="440" data-init-width="440" height="294"
+													data-init-height="294" title=""
 													src="https://storage.googleapis.com/msgsndr/XfwKNLx6iw0IkBG3MFxv/media/69668608e4b3054e3325924f.webp"
 													data-width="440"
-													style="aspect-ratio: auto 440 / 550; border-radius: 15px;"
+													style="aspect-ratio: auto 1000 / 668; border-radius: 15px; height: auto;"
 													srcset="https://storage.googleapis.com/msgsndr/XfwKNLx6iw0IkBG3MFxv/media/69668608e4b3054e3325924f.webp 440w, https://storage.googleapis.com/msgsndr/XfwKNLx6iw0IkBG3MFxv/media/69668608e4b3054e3325924f.webp 240w"
 													sizes="auto, (max-width: 440px) 100vw, 440px" /></span></div>
 									</div>
@@ -7740,10 +7736,6 @@
 
 			function start() {
 				var scripts = [
-					{
-						src: 'wp-content/uploads/bitforms/form-scripts/8/bitform-js-8f5ce.js?bfv&ver=6.9',
-						id: 'bit-form-all-script-test-js',
-					},
 					{
 						src: 'wp-content/plugins/js-socialproof/assets/js/methods4bf4.js?ver=1.0.3',
 						id: 'js-socialproof-method-js',
